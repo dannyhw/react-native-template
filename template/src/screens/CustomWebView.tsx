@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RootStackParamList } from 'navigation/Router';
+import styled from 'styled-components';
+import CustomText from 'components/CustomText';
+import { CommonStackParamList } from 'screens';
 
 const WebView = React.lazy(() =>
   import('react-native-webview').then((module) => ({
@@ -9,20 +11,27 @@ const WebView = React.lazy(() =>
   })),
 );
 
-type ScreenRouteProp = RouteProp<RootStackParamList, 'RootWebView'>;
+type ScreenRouteProp = RouteProp<CommonStackParamList, 'WebView'>;
 
 const CustomWebView = () => {
-  const { url, title } = useRoute<ScreenRouteProp>().params;
+  const { params } = useRoute<ScreenRouteProp>();
 
-  const source = { uri: url };
+  const source = {
+    uri: params?.url || 'https://reactnative.dev',
+    title: params?.title || 'React Native template',
+  };
 
   return (
-    <SafeAreaView>
-      <Suspense fallback={null}>
+    <Container style={{ flex: 1 }}>
+      <Suspense fallback={<CustomText>Loading</CustomText>}>
         <WebView source={source} />
       </Suspense>
-    </SafeAreaView>
+    </Container>
   );
 };
+
+const Container = styled(SafeAreaView)`
+  flex: 1;
+`;
 
 export default CustomWebView;

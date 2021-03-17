@@ -2,20 +2,14 @@ import styled, { css } from 'styled-components/native';
 import { space, SpaceProps, layout, LayoutProps, compose, typography, TypographyProps } from 'styled-system';
 import { BLACK } from 'utils/colors';
 
-type TextProps = SpaceProps &
-  TypographyProps &
-  LayoutProps & {
-    flex?: number | string;
-    textAlign?: string;
-    color?: string;
-    capitalize?: boolean;
-    fontSize?: number;
-    type?: string;
-    underline?: boolean;
-    debug?: boolean;
-    fontFamily?: string;
-    opacity?: number;
-  };
+interface TextProps extends SpaceProps, TypographyProps, LayoutProps {
+  flex?: number | string;
+  color?: string;
+  capitalize?: boolean;
+  underline?: boolean;
+  debug?: boolean;
+  opacity?: number;
+}
 
 const CustomText = styled.Text<TextProps>`
   ${compose(space, layout, typography)}
